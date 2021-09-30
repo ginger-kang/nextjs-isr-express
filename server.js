@@ -1,29 +1,30 @@
-const http = require('http')
-const express = require('express')
-const path = require('path')
+// client/server.js
+
+const { createServer } = require('http')
 const next = require('next')
-const conf = require('./client/next.config.js')
+const express = require('express')
 
-const app = express()
 const dev = process.env.NODE_ENV !== 'production'
-const nextServer = next({
-  dev,
-  conf,
-  dir: path.resolve('./client'),
-})
+const app = next({ dev })
 
-nextServer.prepare().then(() => {
-  app.get('*', async (req, res) => {
+app.prepare().then(() => {
+  const server = express()
+
+  server.get('/', (req, res) => {
+    return app.render(req, res, '/')
+  })
+
+  server.get('*', (req, res) => {
     const t = process.hrtime()
-    const requestHandler = nextServer.getRequestHandler()
 
-    const handle = await requestHandler
+    const handle = app.getRequestHandler()
 
-    console.log(process.hrtime(t))
+    console.log(process.hrtime(t), req.params, res)
     return handle(req, res)
   })
 
-  app.listen(3000, () => {
-    console.log('server running on port 3000')
+  server.listen(3000, err => {
+    if (err) throw err
+    console.log('listening to 3000')
   })
 })

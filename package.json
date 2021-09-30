@@ -1,16 +1,15 @@
 {
-  "name": "nextjs-isr-express",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "nextjs-isr-test",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "server": "node ./server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "server": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
     "hash-generator": "^0.1.0",
     "identicon.js": "^2.3.3",
     "next": "11.1.2",
